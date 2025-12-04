@@ -1,59 +1,67 @@
 # Projeto Integrador: Gestão de Alunos (API REST)
 
-Este é o protótipo inicial para o projeto da disciplina de Projeto Integrador, focado na construção de uma arquitetura de sistemas integrada via serviços REST.
+Este repositório contém a entrega do Projeto Integrador IV-B. O sistema apresenta uma arquitetura baseada em serviços REST para o gerenciamento de alunos.
 
-O projeto consiste em um back-end (API) feito em **Node.js/Express** que se conecta a um banco **MySQL**, e um front-end (Cliente Web) feito em **HTML/CSS/JS** que consome essa API.
-
+A solução é composta por um Back-end em **Node.js/Express** utilizando **TypeORM** para a persistência de dados no **MySQL**, e um Front-end que consome a API para realizar operações de leitura e escrita (CRUD).
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Back-end:** Node.js, Express.js
+O projeto foi desenvolvido utilizando as seguintes tecnologias:
+
+- **Back-end:** Node.js, Express.js e TypeORM 
 - **Banco de Dados:** MySQL
-- **Ambiente:** `dotenv` para variáveis de ambiente
-- **Front-end:** HTML5, CSS (TailwindCSS) e JavaScript (Fetch API)
+- **Front-end:** HTML5, TailwindCSS e JavaScript 
 
-## 🚀 Como Rodar o Projeto
+## 🚀 Pré-requisitos
 
-Você vai precisar do **Node.js** (v18 ou superior) e do **MySQL** (pode ser o do XAMPP) instalados em sua máquina.
+Para executar a aplicação, você precisará apenas de:
+* **Node.js** (Versão 18 ou superior)
+* **MySQL** (Rodando localmente ou via XAMPP/Docker)
 
-### 1. Clonar o Repositório
+---
+
+## 📝 Guia de Instalação e Execução
+
+A aplicação foi desenvolvida para configurar o banco de dados automaticamente.
+
+### 1. Clonar o Repositório 
 
 ```bash
-git clone https://github.com/NicolasCasser/Projeto-Integrador-IV-B.git
+git clone [https://github.com/NicolasCasser/Projeto-Integrador-IV-B.git](https://github.com/NicolasCasser/Projeto-Integrador-IV-B.git)
 ```
 
-### 2. Instalar as Dependências 📦
-
-1. Abra um terminal na raiz do projeto.
-2. Instale todas as dependências do Node.js
+### 2. Instalar Dependências 📦
 
 ```bash
 npm install
 ```
 
-### 3. Configurar o Banco de Dados 🏦
+### 3. Configurar as variáveis de ambiente ⚙️
+- Na raiz do projeto, localize o arquivo ```.env.example```.
 
-1. Inicie seu servidor MySQL.
-2. Acesse seu cliente de banco de dados.
-3. Execute o script `schema.sql` (localizado na raiz do projeto). Isso criará o banco `alunos_db`, a tabela `Alunos` e inserirá dados de exemplo.
+- Duplique este arquivo e renomeie a cópia para ```.env```.
 
-### 4. Configurar o Ambiente (Back-end) ⚙️
+- Preencha o arquivo ```.env``` com as credenciais do seu MySQL (usuário e senha).
+    - Nota: Não é necessário criar o banco manualmente. A aplicação fará isso.
 
-1. Na raiz do projeto, crie uma cópia do arquivo `.env.example` e renomeie-a para `.env`.
-2. Abra o arquivo `.env` e preencha com suas credenciais do MySQL
+### 4. Iniciar a Aplicação 🚀
 
-### 5. Rodar o Servidor 🚀
-
-1. No mesmo terminal, inicie o servidor
+Execute o comando para subir o servidor:
 
 ```bash
 npm start
 ```
 
-1. O terminal deve exibir a mensagem: Servidor back-end rodando em http://localhost:3000
+#### O que acontece agora:
 
-### 6. Acessar o Site 🖥️
+- O sistema verificará se o banco de dados existe. Se não existir, ele será criado automaticamente.
+
+- O TypeORM criará todas as tabelas necessárias.
+
+- O terminal exibirá: Servidor back-end rodando em http://localhost:3001
+
+### 5. Acessar o Sistema 🖥️
 
 1. Abra seu navegador.
-2. Acesse a URL: [**http://localhost:3000/**](http://localhost:3000/)
-3. O site deve carregar, e a lista de alunos (vinda do banco) deve aparecer na tabela.
+2. Acesse: http://localhost:3001/
+3. A aplicação estará pronta para uso.
