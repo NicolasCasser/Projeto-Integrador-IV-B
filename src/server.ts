@@ -8,6 +8,7 @@ import { Disciplina } from "./entities/Disciplina";
 import { Nota } from "./entities/Nota";
 import { Status } from "./enums/status.enum";
 import mysql from 'mysql2/promise';
+import { validate } from "class-validator";
 
 // Função para calcular média e status de aprovação de um aluno
 function calcularStatus(n1: number, n2: number) {
@@ -182,7 +183,7 @@ app.delete('/disciplinas/:id', async (req, res) => {
 });
 
 app.post('/notas', async (req, res) => {
-    try {
+     try {
         const { alunoId, disciplinaId, nota1, nota2 } = req.body;
 
         const n1 = parseFloat(nota1);
@@ -195,15 +196,30 @@ app.post('/notas', async (req, res) => {
         const novaNota = notaRepo.create({
             nota1: n1,
             nota2: n2,
-            media: media,
-            status: status,
+            media,
+            status,
             aluno: { id: alunoId },
             disciplina: { id: disciplinaId }
         });
 
+        const errors = await validate(novaNota);
+        if (errors.length > 0) {
+            return res.status(400).json({
+                erro: "Dados de nota inválidos.",
+                detalhes: errors
+            });
+        }
+
         await notaRepo.save(novaNota);
-        res.status(201).json(novaNota);
+        return res.status(201).json(novaNota);
+
     } catch (error: any) {
+        if (error.code === '1062') {
+            return res.status(400).json({
+                erro: "Este aluno já possui notas cadastradas para esta disciplina."
+            });
+        }
+
         res.status(500).json({ erro: error.message });
     }
 });
@@ -245,8 +261,8 @@ app.put('/notas/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { nota1, nota2 } = req.body;
-        const repo = AppDataSource.getRepository(Nota);
 
+        const repo = AppDataSource.getRepository(Nota);
         const nota = await repo.findOneBy({ id: parseInt(id) });
 
         if (!nota) {
@@ -261,14 +277,23 @@ app.put('/notas/:id', async (req, res) => {
         repo.merge(nota, {
             nota1: n1,
             nota2: n2,
-            media: media,
-            status: status
+            media,
+            status
         });
+
+        const errors = await validate(nota);
+        if (errors.length > 0) {
+            return res.status(400).json({
+                erro: "Dados inválidos",
+                detalhes: errors
+            });
+        }
 
         const resultado = await repo.save(nota);
         res.json(resultado);
+
     } catch (error: any) {
-        res.status(500).json({ erro: error.mesage });
+        res.status(500).json({ erro: error.message });
     }
 });
 

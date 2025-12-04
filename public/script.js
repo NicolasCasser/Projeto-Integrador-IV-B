@@ -48,12 +48,14 @@ function resetForm(tipo) {
     if(btnCancel) btnCancel.classList.add('hidden');
 }
 
+// Função responsável por buscar dados na API e atualizar a interface
 async function fetchAlunos() {
     try {
         const res = await fetch(`${API_URL}/alunos`);
         const alunos = await res.json();
         const tbody = document.getElementById('lista-alunos');
         tbody.innerHTML = '';
+        
         alunos.forEach(a => {
             tbody.innerHTML += `
                 <tr class="border-b hover:bg-gray-50">
@@ -213,6 +215,7 @@ async function fetchNotas(customUrl = null) {
         const notas = await res.json();
         const tbody = document.getElementById('lista-notas');
         tbody.innerHTML = '';
+
         notas.forEach(n => {
             let badge = "bg-gray-200 text-gray-800";
             if(n.status === 'Aprovado') badge = "bg-green-100 text-green-800";
@@ -221,8 +224,8 @@ async function fetchNotas(customUrl = null) {
 
             tbody.innerHTML += `
                 <tr class="border-b hover:bg-gray-50">
-                    <td class="py-3 px-4">${n.aluno ? n.aluno.nome : 'Removido'}</td>
-                    <td class="py-3 px-4">${n.disciplina ? n.disciplina.nome : 'Removido'}</td>
+                    <td class="py-3 px-4">${n.aluno.nome}</td>
+                    <td class="py-3 px-4">${n.disciplina.nome}</td>
                     <td class="py-3 px-2 text-center">${n.nota1}</td>
                     <td class="py-3 px-2 text-center">${n.nota2}</td>
                     <td class="py-3 px-2 text-center font-bold">${n.media}</td>
@@ -293,6 +296,5 @@ async function deletarItem(rota, id) {
     if(rota === 'notas') fetchNotas();
     showMessage("Removido.");
 }
-
 
 showTab('alunos');
