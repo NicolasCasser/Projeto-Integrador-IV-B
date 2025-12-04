@@ -27,7 +27,7 @@ export class Nota {
     aluno: Aluno
 
     // Muitas notas pertencem a uma disciplina
-    @ManyToOne(() => Disciplina)
+    @ManyToOne(() => Disciplina, { onDelete: 'CASCADE'})
     @JoinColumn({ name: 'disciplina_id' })
     disciplina: Disciplina;
 }
