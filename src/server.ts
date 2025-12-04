@@ -214,11 +214,11 @@ app.post('/notas', async (req, res) => {
         return res.status(201).json(novaNota);
 
     } catch (error: any) {
-        if (error.code === '1062') {
-            return res.status(400).json({
-                erro: "Este aluno já possui notas cadastradas para esta disciplina."
-            });
-        }
+    if (error.code === 'ER_DUP_ENTRY' || error.errno === 1062 || error.code === '1062') {
+      return res.status(400).json({
+        erro: "Este aluno já possui notas cadastradas para esta disciplina."
+      });
+    }
 
         res.status(500).json({ erro: error.message });
     }
