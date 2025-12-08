@@ -27,7 +27,7 @@ A aplicação foi desenvolvida para configurar o banco de dados automaticamente.
 ### 1. Clonar o Repositório 
 
 ```bash
-git clone [https://github.com/NicolasCasser/Projeto-Integrador-IV-B.git](https://github.com/NicolasCasser/Projeto-Integrador-IV-B.git)
+git clone https://github.com/NicolasCasser/Projeto-Integrador-IV-B.git
 ```
 
 ### 2. Instalar Dependências 📦
